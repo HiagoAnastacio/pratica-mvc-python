@@ -22,5 +22,43 @@ class Database:
                 host = self.host,
                 database = self.database,
             )
-        # except  as identifier:
-        #     pass  
+            if self.connection.is_connected():
+                self.cursor = self.connection.cursor(dictionary=True)
+                print("Conexão ao banco de dados realizada com sucesso,")
+        except Error as e:
+            print(f"Erro de conexão: {e}")
+            self.connection = None
+            self.cursor = None
+
+    def desconectar(self):
+        """Encerra a conexão com o banco de dados e o cursor, se eles existirem."""
+        if self.cursor:
+            self.cursor.close()
+        if self.connection:
+            self.connection.close()
+        print("Conexão com o banco de dados encerrada com sucesso;")
+    
+    def executar(self, sql, params=None):
+        """Executa uma instrução no banco de dados."""
+        if self.connection is None and self.cursor is None:
+            print('Conexão ao banco de dados não estabelecida?')
+            return None
+        try:
+            self.cursor.execute(sql, params)
+            self.connection.commit()
+            return self.cursor
+        except Error as e:
+            print(f'Erro de execução: {e}')
+            return None
+        
+    def consultar(self, sql, params=None):
+        """Executa uma instrução no banco de dados."""
+        if self.connection is None and self.cursor is None:
+            print('Conexão ao banco de dados não estabelecida?')
+            return None
+        try:
+            self.cursor.execute(sql, params)
+            return self.cursor.fetchall()
+        except Error as e:
+            print(f'Erro de execução: {e}')
+            return None

@@ -1,0 +1,18 @@
+{% extends "home.html" %}
+
+{% block content %}
+    <form method="POST">
+        <input type="text" name="titulo" id="titulo" placeholder="Título da Tarefa" value="{{ tarefa.titulo if tarefa else '' }}" required>
+        <input type="date" name="data_conclusao" id="data_conclusao" value="{{ tarefa.data_conclusao if tarefa else '' }}">
+        <button type="submit">{{ 'Atualizar' if tarefa else 'Adicionar' }}</button>
+    </form>
+    <ul>
+        {% for tarefa in tarefas %}
+        <li>
+            {{ tarefa.titulo }} - {{ tarefa.data_conclusao }}
+            <a href="{{ url_for('delete', idTarefa=tarefa.id) }}">Apagar</a>
+            <a href="{{ url_for('edit', idTarefa=tarefa.id) }}">Editar</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

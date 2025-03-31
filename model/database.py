@@ -21,10 +21,12 @@ class Database:
             self.connection = mysql.connector.connect(
                 host = self.host,
                 database = self.database,
+                user = self.username,
+                password = self.password
             )
             if self.connection.is_connected():
                 self.cursor = self.connection.cursor(dictionary=True)
-                print("Conexão ao banco de dados realizada com sucesso,")
+                print("Conexão ao banco de dados realizada com sucesso!")
         except Error as e:
             print(f"Erro de conexão: {e}")
             self.connection = None
@@ -36,7 +38,7 @@ class Database:
             self.cursor.close()
         if self.connection:
             self.connection.close()
-        print("Conexão com o banco de dados encerrada com sucesso;")
+        print("Conexão com o banco de dados encerrada com sucesso!")
     
     def executar(self, sql, params=None):
         """Executa uma instrução no banco de dados."""

@@ -1,3 +1,4 @@
+#Este arquivo é o "Model" da aplicação, onde a lógica de negócio e as interações com o banco de dados são definidas.
 from model.database import Database
 
 class Tarefa:

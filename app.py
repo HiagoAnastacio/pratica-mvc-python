@@ -1,3 +1,4 @@
+# Este arquivo é o "Controller" da aplicação, onde as rotas são definidas e as interações com o modelo são realizadas.
 from flask import Flask, render_template, request, redirect, url_for
 from model.tarefa import Tarefa
 
@@ -29,7 +30,7 @@ def edit(idTarefa):
         tarefa.atualizarTarefa()
         return redirect(url_for("index"))
 
-    return render_template("index.html", tarefa=tarefa, title="Editar Tarefa")
+    return render_template("index.html", tarefa=tarefa, tarefas=tarefas, title="Editar Tarefa")
 
 @app.route("/delete/<int:idTarefa>")
 def delete(idTarefa):
